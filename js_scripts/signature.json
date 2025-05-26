@@ -1,0 +1,12 @@
+{
+    "employee": "0xc3795f645056a68035D6C3Cb434B5545D2527952",
+    "period": 202405,
+    "usdAmount": 1250,
+    "domain": {
+        "name": "Payroll",
+        "version": "1",
+        "chainId": 11155111,
+        "verifyingContract": "0x50E37dfb61D21E3419f77D8AA8D5EacF6D8483CE"
+    },
+    "signature": "0xf159d44ceee4b04b68c667e8410949cf433088404a4b155f4b189f7fcac82c8c597c0f86d52685e1a5e94eda42ce529cbb93f30e07292c64c0bc27957224e78c1c"
+}
