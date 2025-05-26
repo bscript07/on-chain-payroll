@@ -23,7 +23,7 @@ node generate-pay-stub.js
 
 ## Proof of execution
 
-- createPayroll tx: 0x896c8b24de6ba1f22908d70aef4d2bbbd814686d4d6b7b8054405d762673ab1b
+- createPayroll tx: [0x896c8b24de6ba1f22908d70aef4d2bbbd814686d4d6b7b8054405d762673ab1b]
 - fund tx: 0x9b038fb92ca75fd39ae7f9ca0b6872a8b096c25f63eb93a1cf6c815448cf3c46
 - salaryClaim tx: 0xa7b8b298757caa277651975a23f3fdff6681e2bec11ca6682d80aadef6592b77
 - adminWithdraw tx: 0xb53dffd8a4edd4e7eb1b0418ea1be21eca7e6b7b4bcc8cdafac8e3984e2bb0e8
