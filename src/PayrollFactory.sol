@@ -19,25 +19,25 @@ contract PayrollFactory {
         hr = _hr;
     }
 
-    modifier onlyHR {
+    modifier onlyHR() {
         require(msg.sender == hr, NotHR());
         _;
     }
 
-    function createPayroll(address _director, address _priceFeed, string memory _departmentName) external onlyHR returns (address proxy) {
+    function createPayroll(address _director, address _priceFeed, string memory _departmentName)
+        external
+        onlyHR
+        returns (address proxy)
+    {
         proxy = implementation.clone();
 
-        (bool success, ) = proxy.call(abi.encodeWithSignature(
-            "initialize(address,address,address,string)",
-            hr,
-            _director,
-            _priceFeed,
-            _departmentName
-        ));
+        (bool success,) = proxy.call(
+            abi.encodeWithSignature(
+                "initialize(address,address,address,string)", hr, _director, _priceFeed, _departmentName
+            )
+        );
         require(success, InitializationFailed());
 
         emit PayrollCreated(proxy, _director);
     }
 }
-
-

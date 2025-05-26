@@ -9,7 +9,6 @@ error InvalidDirectorAddress();
 error InvalidHRAddress();
 
 contract DeployScript is Script {
-
     function run() public {
         vm.startBroadcast();
 
@@ -39,4 +38,3 @@ contract DeployScript is Script {
 }
 
 // forge script script/deploy.s.sol:DeployScript --rpc-url sepolia --broadcast --verify --private-key <HR_PRIVATE_KEY> -vv
-

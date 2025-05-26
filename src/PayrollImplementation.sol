@@ -32,17 +32,15 @@ contract PayrollImplementation is Initializable, EIP712Upgradeable {
     event SalaryClaimed(address indexed employee, uint256 period, uint256 usdAmount, uint256 ethAmount);
     event AdminWithdrawable(address indexed to, uint256 amount);
 
-    modifier onlyHR {
+    modifier onlyHR() {
         require(msg.sender == hr, NotHR());
         _;
     }
 
-    function initialize(
-        address _hr,
-        address _director,
-        address _priceFeed,
-        string memory _departmentName
-    ) public initializer {
+    function initialize(address _hr, address _director, address _priceFeed, string memory _departmentName)
+        public
+        initializer
+    {
         __EIP712_init("Payroll", "1");
         hr = _hr;
         director = _director;
@@ -54,7 +52,11 @@ contract PayrollImplementation is Initializable, EIP712Upgradeable {
         return _hashTypedDataV4(keccak256(abi.encode(PAYSTUB_TYPEHASH, employee, period, usdAmount)));
     }
 
-    function verifySignature(address employee, uint256 period, uint256 usdAmount, bytes memory signature) public view returns (bool) {
+    function verifySignature(address employee, uint256 period, uint256 usdAmount, bytes memory signature)
+        public
+        view
+        returns (bool)
+    {
         bytes32 digest = _hashPayStub(employee, period, usdAmount);
         address signer = ECDSA.recover(digest, signature);
 
@@ -71,7 +73,7 @@ contract PayrollImplementation is Initializable, EIP712Upgradeable {
 
     function salaryClaim(uint256 period, uint256 usdGross, bytes calldata signature) external {
         require(!isClaimed[msg.sender][period], AlreadyClaimed());
-        
+
         bool valid = verifySignature(msg.sender, period, usdGross, signature);
         require(valid, InvalidSignature());
 
@@ -84,7 +86,7 @@ contract PayrollImplementation is Initializable, EIP712Upgradeable {
 
         isClaimed[msg.sender][period] = true;
 
-        (bool success, ) = msg.sender.call{value: amountEth}("");
+        (bool success,) = msg.sender.call{value: amountEth}("");
         require(success, TransferFailed());
 
         emit SalaryClaimed(msg.sender, period, usdGross, amountEth);
@@ -94,7 +96,7 @@ contract PayrollImplementation is Initializable, EIP712Upgradeable {
         require(msg.sender == director, OnlyDirectorCanWithdraw());
         require(address(this).balance >= amount, InsufficientBalance());
 
-        (bool success, ) = director.call{value: amount}("");
+        (bool success,) = director.call{value: amount}("");
         require(success, WithdrawFailed());
 
         emit AdminWithdrawable(director, amount);
