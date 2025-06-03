@@ -1,17 +1,9 @@
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 const { ethers } = require("ethers");
 const fs = require("fs");
 const path = require("path");
+const { directorPrivateKey, employee, verifyingContract } = require("../config/env");
 
-async function main() {
-    const directorPrivateKey = process.env.DIRECTOR_PRIVATE_KEY;
-    const employee = process.env.EMPLOYEE_ADDRESS;
-    const verifyingContract = process.env.CLONE_ADDRESS;
-
-    if (!directorPrivateKey || !employee || !verifyingContract) {
-        throw new Error("Missing .env vars");
-    }
-
+async function generatePayStub() {
     const wallet = new ethers.Wallet(directorPrivateKey);
 
     const domain = {
@@ -56,6 +48,6 @@ async function main() {
     console.log(`✅ Pay-stub signed and saved to ${filePath}`);
 }
 
-main().catch((err) => {
+generatePayStub().catch((err) => {
     console.error("Error: ", err);
 });
